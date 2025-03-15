@@ -3,15 +3,20 @@
 
 int fatorial(int nume);
 int natural(int numero);
+int Contagem(int numero);
 
 int main() {
-    // Write C code here
+    //exercicio 1
     int re = fatorial(5);
     printf("%d", re);
-    
-     int ae = natural(3);
-    printf("\n %d", ae);
-    return 0;
+
+        //exercicio 2
+         int ae = natural(3);
+        printf("\n %d", ae);
+        return 0;
+
+ //exercicio 5   
+ int de = Contagem(10);
 }
 
 //exercicio 1
@@ -29,4 +34,16 @@ int natural(int numero){
     }
    
     return numero + natural(numero - 1); 
+}
+
+//exercicio 5
+int Contagem(int numero){
+    if(numero>0){
+        printf("%d \n",numero);
+    }
+    if(numero<0){
+        printf("acabou");
+        return 0;
+    }
+    return Contagem(numero - 1);
 }
