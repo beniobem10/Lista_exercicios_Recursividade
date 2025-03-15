@@ -3,6 +3,7 @@
 
 int fatorial(int nume);
 int natural(int numero);
+int potencia(int numero,int elevado);
 int Contagem(int numero);
 
 int main() {
@@ -11,9 +12,13 @@ int main() {
     printf("%d", re);
 
         //exercicio 2
-         int ae = natural(3);
+        int ae = natural(3);
         printf("\n %d", ae);
         return 0;
+
+        //exercicio 4
+        int ce = potencia(3,4);
+        printf("%d",ce);
 
  //exercicio 5   
  int de = Contagem(10);
@@ -34,6 +39,15 @@ int natural(int numero){
     }
    
     return numero + natural(numero - 1); 
+}
+
+//exercicio 4
+int potencia(int numero, int elevado){
+    if(elevado<=0){
+        return 1;
+    }
+    
+    return numero * potencia(numero,elevado-1);
 }
 
 //exercicio 5
