@@ -5,6 +5,7 @@ int fatorial(int nume);
 int natural(int numero);
 int potencia(int numero,int elevado);
 int Contagem(int numero);
+int verificador (int vetor[], int pos, int comp); //exercicio 11
 
 int main() {
     //exercicio 1
@@ -14,7 +15,7 @@ int main() {
         //exercicio 2
         int ae = natural(3);
         printf("\n %d", ae);
-        return 0;
+        
 
         //exercicio 4
         int ce = potencia(3,4);
@@ -22,6 +23,12 @@ int main() {
 
  //exercicio 5   
  int de = Contagem(10);
+
+        //exercicio 11
+        int vetor[5] = {3,3,3,3,4};
+        printf("%d\n", verificador(vetor, 4, 3));
+
+    return 0;
 }
 
 //exercicio 1
@@ -60,4 +67,16 @@ int Contagem(int numero){
         return 0;
     }
     return Contagem(numero - 1);
+}
+
+//exercicio 11
+int verificador(int vetor[], int pos, int comp){
+    if(pos < 0) return 0;
+    
+    int salvo = vetor[pos];
+
+    if( salvo == comp){
+        return verificador(vetor, pos -1, comp) + 1;
+    }
+    return verificador(vetor, pos -1, comp);
 }
