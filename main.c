@@ -117,6 +117,9 @@ int multirec(int numero,int multi){
             if( salvo == comp){
                 return verificador(vetor, pos -1, comp) + 1;
             }
+         return verificador(vetor, pos -1, comp);
+        }
+    
 
         //exercicio 12    
         int Somaelemen(int ver[],int posi){
@@ -127,5 +130,4 @@ int multirec(int numero,int multi){
             int salva = ver[posi];
             return salva + Somaelemen(ver,posi-1);
         }
-            return verificador(vetor, pos -1, comp);
-        }
+       
