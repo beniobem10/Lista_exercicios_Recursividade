@@ -8,6 +8,7 @@ int Contagem(int numero);  //exercicio 5
 int digito(int numero); //exercicio 6
 int multirec(int numero,int multi); //exercicio 10
 int verificador (int vetor[], int pos, int comp); //exercicio 11
+int Somaelemen(int ver[],int posi); //exercicio 12
 
 int main() {
     //exercicio 1
@@ -37,6 +38,14 @@ printf("%d",mulRec);
         //exercicio 11
         int vetor[5] = {3,3,3,3,4};
         printf("%d\n", verificador(vetor, 4, 3));
+
+        //exercicio 12
+        int ver[5]= {31,1,38,5,1};
+
+        int Somele = Somaelemen(ver,4);
+        printf("%d", Somele);
+
+        
 
     return 0;
 }
@@ -108,5 +117,15 @@ int multirec(int numero,int multi){
             if( salvo == comp){
                 return verificador(vetor, pos -1, comp) + 1;
             }
+
+        //exercicio 12    
+        int Somaelemen(int ver[],int posi){
+            if(posi<0){
+                return 0;
+            }
+    
+            int salva = ver[posi];
+            return salva + Somaelemen(ver,posi-1);
+        }
             return verificador(vetor, pos -1, comp);
         }
