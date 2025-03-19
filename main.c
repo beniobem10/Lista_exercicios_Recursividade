@@ -3,6 +3,7 @@
 
 int fatorial(int nume); //exercicio 1
 int natural(int numero); //exercicio 2
+int fiboracci(int numero); //exercicio 3
 int potencia(int numero,int elevado); //exercicio 4
 int Contagem(int numero);  //exercicio 5
 int digito(int numero); //exercicio 6
@@ -18,8 +19,11 @@ int main() {
         //exercicio 2
         int ae = natural(3);
         printf("\n %d", ae);
-        
 
+        //exercicio 3
+        int fibo = fiboracci(6);
+        printf("%d",fibo);
+        
         //exercicio 4
         int ce = potencia(3,4);
         printf("%d",ce);
@@ -49,7 +53,7 @@ printf("%d",mulRec);
 
     return 0;
 }
-
+//////////////////////////////////////////////////////////////////////////
 //exercicio 1
 int fatorial(int nume){
     if(nume <= 1){
@@ -67,7 +71,16 @@ int fatorial(int nume){
             return numero + natural(numero - 1); 
          }
 
-
+        //exercicio 3
+        int fiboracci(int numero){
+            if(numero==0)return 0;
+    
+                if(numero==1){
+                    return 1;
+                }
+            return fiboracci(numero- 1) + fiboracci(numero - 2);
+        }
+    
         //exercicio 4
         int potencia(int numero, int elevado){
             if(elevado<=0){
