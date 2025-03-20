@@ -10,6 +10,8 @@ int digito(int numero); //exercicio 6
 int multirec(int numero,int multi); //exercicio 10
 int verificador (int vetor[], int pos, int comp); //exercicio 11
 int Somaelemen(int ver[],int posi); //exercicio 12
+int numePar(int numero); //exercicio 15
+int numeImpar(int numero); //exercicio 16
 
 int main() {
     //exercicio 1
@@ -49,6 +51,11 @@ printf("%d",mulRec);
         int Somele = Somaelemen(ver,4);
         printf("%d", Somele);
 
+//exercicio 15
+int nuPar = numePar(6);    
+    
+    //exercicio 16
+    int nuImpa = numeImpar(7);
         
 
     return 0;
@@ -143,4 +150,26 @@ int multirec(int numero,int multi){
             int salva = ver[posi];
             return salva + Somaelemen(ver,posi-1);
         }
-       
+//exercicio 15
+int numePar(int numero){
+    if(numero == 0){
+        return 0;
+    }
+    if(numero % 2 == 0){
+        printf("%d\n",numero);
+    }
+    
+    return  numePar(numero - 2 );
+}
+
+        //exercicio 16
+        int numeImpar(int numero){
+            if(numero<=0){
+                return 0;
+            }
+            
+            if(numero % 2 == 1){
+                printf("%d\n",numero);
+            }
+            return  numeImpar(numero - 2 );
+        }
