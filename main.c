@@ -7,6 +7,7 @@ int fiboracci(int numero); //exercicio 3
 int potencia(int numero,int elevado); //exercicio 4
 int Contagem(int numero);  //exercicio 5
 int digito(int numero); //exercicio 6
+int Invertor(char str[],int posi); //exercicio 7
 int multirec(int numero,int multi); //exercicio 10
 int verificador (int vetor[], int pos, int comp); //exercicio 11
 int Somaelemen(int ver[],int posi); //exercicio 12
@@ -32,6 +33,10 @@ int main() {
 
  //exercicio 5   
  int de = Contagem(10);
+
+        //exercicio 7
+        char str[8] = {'F','u','l','a','n','o'};
+        char IN=Invertor(str,5);
 
         //exercicio 6
         int digi = digito(123);
@@ -115,6 +120,17 @@ int Contagem(int numero){
             
             int salvo = salvo + (numero % 10 );
             return salvo + digito(numero /10);
+        }
+    
+        //exercicio 7
+        int Invertor(char str[],int posi){
+            if(posi <= -1){
+                return str[posi];
+            }
+        char sal = str[posi];
+        printf("%c",sal);
+    
+        return Invertor(str, posi - 1);
         }
 
 //exercicio 10
