@@ -13,6 +13,7 @@ int verificador (int vetor[], int pos, int comp); //exercicio 11
 int Somaelemen(int ver[],int posi); //exercicio 12
 int numePar(int numero); //exercicio 15
 int numeImpar(int numero); //exercicio 16
+int ExpoRapi(int numero, int expoente); //exercicio 26
 
 int main() {
     //exercicio 1
@@ -61,8 +62,12 @@ int nuPar = numePar(6);
     
     //exercicio 16
     int nuImpa = numeImpar(7);
-        
 
+    //exercicio 26
+    int ex=ExpoRapi(4,4);
+    printf("%d",ex);
+
+    
     return 0;
 }
 //////////////////////////////////////////////////////////////////////////
@@ -188,4 +193,17 @@ int numePar(int numero){
                 printf("%d\n",numero);
             }
             return  numeImpar(numero - 2 );
+        }
+
+        //exercicio 26
+        int ExpoRapi(int numero, int expoente){
+            if(numero <= 1 ||expoente == 0){
+                return 1;
+            }
+            
+            if(expoente == 1){
+                return numero;
+            }
+    
+            return numero * ExpoRapi(numero,expoente-1);
         }
