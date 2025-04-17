@@ -8,6 +8,7 @@ int potencia(int numero,int elevado); //exercicio 4
 int Contagem(int numero);  //exercicio 5
 int digito(int numero); //exercicio 6
 int Invertor(char str[],int posi); //exercicio 7
+int MDC(int a,int b); //exercicio 9
 int multirec(int numero,int multi); //exercicio 10
 int verificador (int vetor[], int pos, int comp); //exercicio 11
 int Somaelemen(int ver[],int posi); //exercicio 12
@@ -42,6 +43,10 @@ int main() {
         //exercicio 6
         int digi = digito(123);
         printf("%d",digi);
+
+        //exercicio 9
+        int me= MDC(48,18);
+        printf("%d",me);
 
  //exercicio 10   
 int mulRec=multirec(7,3);
@@ -136,6 +141,14 @@ int Contagem(int numero){
         printf("%c",sal);
     
         return Invertor(str, posi - 1);
+        }
+
+        //exercicio 9
+        int MDC(int a,int b){
+            if(b== 0){
+                return a;
+            }
+          return MDC(b,a % b);
         }
 
 //exercicio 10
