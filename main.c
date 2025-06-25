@@ -8,10 +8,13 @@ int potencia(int numero,int elevado); //exercicio 4
 int Contagem(int numero);  //exercicio 5
 int digito(int numero); //exercicio 6
 int Invertor(char str[],int posi); //exercicio 7
+int ehPalindromo(const char *str, int inicio, int fim);//exercicio 8
 int MDC(int a,int b); //exercicio 9
 int multirec(int numero,int multi); //exercicio 10
 int verificador (int vetor[], int pos, int comp); //exercicio 11
 int Somaelemen(int ver[],int posi); //exercicio 12
+int ehPrimo(int n, int divisor); //exercicio 13
+void decimalParaBinario(int n); //exercicio 14
 int numePar(int numero); //exercicio 15
 int numeImpar(int numero); //exercicio 16
 int ExpoRapi(int numero, int expoente); //exercicio 26
@@ -36,13 +39,26 @@ int main() {
  //exercicio 5   
  int de = Contagem(10);
 
+        //exercicio 6
+        int digi = digito(123);
+        printf("%d",digi);
+    
         //exercicio 7
         char str[8] = {'F','u','l','a','n','o'};
         char IN=Invertor(str,5);
 
-        //exercicio 6
-        int digi = digito(123);
-        printf("%d",digi);
+        //exercicio 8
+        char str[100];
+    
+        printf("Digite uma string: ");
+        fgets(str, sizeof(str), stdin);
+    
+        str[strcspn(str, "\n")] = '\0';
+    
+        if (ehPalindromo(str, 0, strlen(str) - 1))
+            printf("A string é um palíndromo.\n");
+        else
+            printf("A string não é um palíndromo.\n");
 
         //exercicio 9
         int me= MDC(48,18);
@@ -61,6 +77,37 @@ printf("%d",mulRec);
 
         int Somele = Somaelemen(ver,4);
         printf("%d", Somele);
+
+        //exercicio 13
+         int numero;
+    
+        printf("Digite um número inteiro positivo: ");
+        scanf("%d", &numero);
+    
+        if (numero < 2) {
+            printf("0\n"); // Números menores que 2 não são primos
+        } else if (ehPrimo(numero, 2)) {
+            printf("1\n"); // Primo
+        } else {
+            printf("0\n"); // Não primo
+        }
+
+        //exercicio 14
+        int numero;
+
+        printf("Digite um número decimal: ");
+        scanf("%d", &numero);
+    
+        if (numero < 0) {
+            printf("Número negativo não suportado.\n");
+        } else if (numero == 0) {
+            printf("0");
+        } else {
+            decimalParaBinario(numero);
+        }
+    
+        printf("\n");
+        
 
 //exercicio 15
 int nuPar = numePar(6);    
@@ -184,6 +231,32 @@ int multirec(int numero,int multi){
             int salva = ver[posi];
             return salva + Somaelemen(ver,posi-1);
         }
+
+        //exercicio 13 
+        int ehPrimo(int n, int divisor) {
+            if (divisor > sqrt(n)) // Se já passou da raiz quadrada, é primo
+                return 1;
+        
+            if (n % divisor == 0) // Encontrou divisor, não é primo
+                return 0;
+        
+            return ehPrimo(n, divisor + 1); // Testa próximo divisor
+        }
+
+        //exercicio 14
+        void decimalParaBinario(int n) {
+        if (n == 0)
+            return;
+        
+            // Chamada recursiva antes (para inverter a ordem)
+            decimalParaBinario(n / 2);
+        
+            // Imprime o bit mais à direita
+            printf("%d", n % 2);
+        }
+        
+
+
 //exercicio 15
 int numePar(int numero){
     if(numero == 0){
