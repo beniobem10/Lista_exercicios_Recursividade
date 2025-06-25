@@ -37,6 +37,21 @@ int particionar(int arr[], int inicio, int fim);//exercicio 24
 int buscaBinaria(int arr[], int inicio, int fim, int chave);//exercicio 25
 int ExpoRapi(int numero, int expoente); //exercicio 26
 
+void encontrarCaminhos(int x, int y, int x2, int y2, int caminho[MAX][2], int passo);
+int contarCaminhos(int x1, int y1, int x2, int y2);//exercicio 27
+
+void resolverNRainhas(int n);
+void colocarRainha(int linha, int n, int *colunas, int *diag1, int *diag2, char tabuleiro[MAX][MAX]);
+void imprimirTabuleiro(char tabuleiro[MAX][MAX], int n); //exercicio 28
+
+
+int resolverLabirinto(int lab[MAX][MAX], char sol[MAX][MAX], int n, int m, int x, int y);
+void imprimirSolucao(char sol[MAX][MAX], int n, int m);//exercicio 29
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
+
+void gerarParenteses(int abertos, int fechados, int n, char *sequencia, int pos);//exercicio 30
+
 
 int main() {
     //exercicio 1
@@ -241,9 +256,70 @@ else
     int ex=ExpoRapi(4,4);
     printf("%d",ex);
 
+
+    //exercicio 27
+     int x1 = 0, y1 = 0;
+    int x2 = 2, y2 = 2;
+
+    printf("Todos os caminhos de (%d,%d) até (%d,%d):\n", x1, y1, x2, y2);
+    int caminho[MAX][2];
+    encontrarCaminhos(x1, y1, x2, y2, caminho, 0);
+
+    int total = contarCaminhos(x1, y1, x2, y2);
+    printf("\nTotal de caminhos possíveis: %d\n", total);
+
     
-    return 0;
-}
+    //exercicio 28
+    int n;
+    printf("Digite o valor de N (até %d): ", MAX);
+    scanf("%d", &n);
+
+    if (n < 1 || n > MAX) {
+        printf("Valor inválido.\n");
+        return 1;
+    }
+
+    resolverNRainhas(n);
+
+
+    //exercicio 29
+     int lab[MAX][MAX];
+    char sol[MAX][MAX];
+    int n, m;
+
+    printf("Digite as dimensões do labirinto (n m): ");
+    scanf("%d %d", &n, &m);
+
+    printf("Digite o labirinto (0 = livre, 1 = parede):\n");
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &lab[i][j]);
+            sol[i][j] = '0';
+        }
+
+    if (lab[0][0] == 1 || lab[n-1][m-1] == 1) {
+        printf("Sem caminho possível (início ou fim bloqueado).\n");
+        return 1;
+    }
+
+    if (resolverLabirinto(lab, sol, n, m, 0, 0))
+        imprimirSolucao(sol, n, m);
+    else
+        printf("Nenhum caminho encontrado.\n");
+
+
+//exercicio 30 
+int n;
+printf("Digite o número de pares de parênteses: ");
+scanf("%d", &n);
+
+char sequencia[MAX];
+gerarParenteses(0, 0, n, sequencia, 0);
+    
+    
+
+        return 0;
+
 //////////////////////////////////////////////////////////////////////////
 //exercicio 1
 int fatorial(int nume){
@@ -589,3 +665,132 @@ void trocarCaracteres(char *a, char *b) {
     
             return numero * ExpoRapi(numero,expoente-1);
         }
+
+
+        //exercicio 27
+        void encontrarCaminhos(int x, int y, int x2, int y2, int caminho[MAX][2], int passo) {
+            caminho[passo][0] = x;
+            caminho[passo][1] = y;
+
+            if (x == x2 && y == y2) {
+                for (int i = 0; i <= passo; i++) {
+                    printf("(%d,%d)", caminho[i][0], caminho[i][1]);
+                    if (i < passo) printf(" -> ");
+                }
+                printf("\n");
+                return;
+            }
+        
+            if (x < x2)
+                encontrarCaminhos(x + 1, y, x2, y2, caminho, passo + 1);
+
+            if (y < y2)
+                encontrarCaminhos(x, y + 1, x2, y2, caminho, passo + 1);
+        }
+        
+        int contarCaminhos(int x1, int y1, int x2, int y2) {
+            if (x1 > x2 || y1 > y2)
+                return 0;
+            if (x1 == x2 && y1 == y2)
+                return 1;
+        
+            return contarCaminhos(x1 + 1, y1, x2, y2) + contarCaminhos(x1, y1 + 1, x2, y2);
+        }
+
+
+        //exercicio 28
+        void resolverNRainhas(int n) {
+            int colunas[MAX] = {0};
+            int diag1[2 * MAX] = {0};
+            int diag2[2 * MAX] = {0};
+        
+            char tabuleiro[MAX][MAX];
+        
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    tabuleiro[i][j] = '.';
+        
+            colocarRainha(0, n, colunas, diag1, diag2, tabuleiro);
+        }
+        
+        void colocarRainha(int linha, int n, int *colunas, int *diag1, int *diag2, char tabuleiro[MAX][MAX]) {
+            if (linha == n) {
+                imprimirTabuleiro(tabuleiro, n);
+                return;
+            }
+        
+            for (int col = 0; col < n; col++) {
+                if (!colunas[col] && !diag1[linha + col] && !diag2[linha - col + n - 1]) {
+                    tabuleiro[linha][col] = 'Q';
+                    colunas[col] = diag1[linha + col] = diag2[linha - col + n - 1] = 1;
+        
+                    colocarRainha(linha + 1, n, colunas, diag1, diag2, tabuleiro);
+        
+                    tabuleiro[linha][col] = '.';
+                    colunas[col] = diag1[linha + col] = diag2[linha - col + n - 1] = 0;
+                }
+            }
+        }
+        
+        void imprimirTabuleiro(char tabuleiro[MAX][MAX], int n) {
+            printf("\n");
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    printf("%c ", tabuleiro[i][j]);
+                }
+                printf("\n");
+            }
+        }
+
+
+        //exercicio 29
+        int resolverLabirinto(int lab[MAX][MAX], char sol[MAX][MAX], int n, int m, int x, int y) {
+        if (x == n - 1 && y == m - 1) {
+            sol[x][y] = '*';
+            return 1;
+        }
+    
+        if (x < 0 || y < 0 || x >= n || y >= m || lab[x][y] == 1 || sol[x][y] == '*')
+            return 0;
+    
+        sol[x][y] = '*';
+    
+        for (int dir = 0; dir < 4; dir++) {
+            int nx = x + dx[dir];
+            int ny = y + dy[dir];
+            if (resolverLabirinto(lab, sol, n, m, nx, ny))
+                return 1;
+        }
+    
+        sol[x][y] = '0';
+        return 0;
+    }
+    
+    void imprimirSolucao(char sol[MAX][MAX], int n, int m) {
+        printf("\nCaminho encontrado:\n");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++)
+                printf("%c ", sol[i][j]);
+            printf("\n");
+        }
+    }
+
+
+//exercicio 30 
+void gerarParenteses(int abertos, int fechados, int n, char *sequencia, int pos) {
+    if (abertos == n && fechados == n) {
+        sequencia[pos] = '\0'; // Finaliza string
+        printf("%s\n", sequencia);
+        return;
+    }
+
+    if (abertos < n) {
+        sequencia[pos] = '(';
+        gerarParenteses(abertos + 1, fechados, n, sequencia, pos + 1);
+    }
+
+    if (fechados < abertos) {
+        sequencia[pos] = ')';
+        gerarParenteses(abertos, fechados + 1, n, sequencia, pos + 1);
+    }
+}
