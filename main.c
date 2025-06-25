@@ -17,7 +17,26 @@ int ehPrimo(int n, int divisor); //exercicio 13
 void decimalParaBinario(int n); //exercicio 14
 int numePar(int numero); //exercicio 15
 int numeImpar(int numero); //exercicio 16
+int buscaRecursiva(int arr[], int tamanho, int alvo);//exercicio 17
+int comprimentoRecursivo(const char *str);//exercicio 18
+void torreDeHanoi(int n, char origem, char auxiliar, char destino);//exercicio 19
+
+void gerarPermutacoes(char str[], int inicio, int fim);
+void trocarCaracteres(char *a, char *b); //exercicio20
+
+void gerarCombinacoes(int arr[], int n, int k, int index, int data[], int i);//exercicio 21
+void gerarSubconjuntos(int arr[], int n, int index, int subconjunto[], int tamanhoAtual);//exercicio 22
+
+void mergeSort(int arr[], int inicio, int fim);
+void merge(int arr[], int inicio, int meio, int fim);//exercicio 23
+
+void quickSort(int arr[], int inicio, int fim);
+int particionar(int arr[], int inicio, int fim);//exercicio 24
+
+
+int buscaBinaria(int arr[], int inicio, int fim, int chave);//exercicio 25
 int ExpoRapi(int numero, int expoente); //exercicio 26
+
 
 int main() {
     //exercicio 1
@@ -115,6 +134,109 @@ int nuPar = numePar(6);
     //exercicio 16
     int nuImpa = numeImpar(7);
 
+    //exercicio 17
+     int vetor[] = {2, 4, 6, 8};
+    int tamanho = sizeof(vetor) / sizeof(vetor[0]);
+    int elemento;
+
+    printf("Digite o elemento que deseja buscar: ");
+    scanf("%d", &elemento);
+
+    if (buscaRecursiva(vetor, tamanho, elemento))
+        printf("1\n"); // Elemento encontrado
+    else
+        printf("0\n"); // Elemento não encontrado
+
+    //exercicio 18
+    char texto[100];
+
+    printf("Digite uma string: ");
+    fgets(texto, sizeof(texto), stdin);
+
+    // Remove o '\n' se estiver presente
+    texto[strcspn(texto, "\n")] = '\0';
+
+    int comprimento = comprimentoRecursivo(texto);
+    printf("Comprimento da string: %d\n", comprimento);
+    
+    //exercicio 19
+    int n;
+    printf("Digite o número de discos: ");
+    scanf("%d", &n);
+
+    printf("Movimentos:\n");
+    torreDeHanoi(n, 'A', 'B', 'C');
+
+
+    //execicio 20
+    char str[100];
+
+    printf("Digite uma string: ");
+    scanf("%s", str); 
+
+    printf("Permutações:\n");
+    gerarPermutacoes(str, 0, strlen(str) - 1);
+
+    //exercicio 21
+    int arr[] = {1, 2, 3};
+    int k = 2;
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int data[k]; // Array temporário para armazenar a combinação atual
+
+    printf("Combinações de tamanho %d:\n", k);
+    gerarCombinacoes(arr, n, k, 0, data, 0);
+
+    //exercicio 22
+     int arr[] = {1, 2};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int subconjunto[n];  // vetor auxiliar para armazenar subconjunto atual
+
+    printf("Subconjuntos:\n");
+    gerarSubconjuntos(arr, n, 0, subconjunto, 0);
+
+
+    //exercicio 23
+    int arr[] = {5, 3, 8, 1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Array original: ");
+    for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+    printf("\n");
+
+    mergeSort(arr, 0, n - 1);
+
+    printf("Array ordenado: ");
+    for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+    printf("\n");
+
+    
+    //exercicio 24
+    int arr[] = {5, 3, 8, 1, 7, 2};
+    int n = sizeof(arr) / sizeof(arr[0]);
+        printf("Array original: ");
+        for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+        
+        printf("\n");
+        quickSort(arr, 0, n - 1);
+    printf("Array ordenado: ");
+    for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+    printf("\n");
+    
+
+//exercicio 25
+int arr[] = {1, 3, 5, 7, 9};
+int n = sizeof(arr) / sizeof(arr[0]);
+int chave = 5;
+
+int resultado = buscaBinaria(arr, 0, n - 1, chave);
+
+if (resultado != -1)
+    printf("Elemento %d encontrado no índice %d.\n", chave, resultado);
+else
+    printf("Elemento %d não encontrado no array.\n", chave);
+    
+    
     //exercicio 26
     int ex=ExpoRapi(4,4);
     printf("%d",ex);
@@ -256,7 +378,6 @@ int multirec(int numero,int multi){
         }
         
 
-
 //exercicio 15
 int numePar(int numero){
     if(numero == 0){
@@ -279,6 +400,181 @@ int numePar(int numero){
                 printf("%d\n",numero);
             }
             return  numeImpar(numero - 2 );
+        }
+
+        //exercicio 17
+        int buscaRecursiva(int arr[], int tamanho, int alvo) {
+        if (tamanho == 0)
+            return 0; // Caso base: não encontrou
+    
+        if (arr[0] == alvo)
+            return 1; // Encontrou o elemento
+    
+        // Chamada recursiva com o restante do array
+        return buscaRecursiva(arr + 1, tamanho - 1, alvo);
+        }
+
+
+        //exercicio 18
+        int comprimentoRecursivo(const char *str) {
+        if (*str == '\0')
+            return 0; // Caso base: fim da string
+    
+        return 1 + comprimentoRecursivo(str + 1); // Conta o caractere atual
+        }
+
+
+        //exercicio 19
+        void torreDeHanoi(int n, char origem, char auxiliar, char destino) {
+        if (n == 1) {
+            printf("Mover disco 1 de %c para %c\n", origem, destino);
+            return;
+        }
+    
+        torreDeHanoi(n - 1, origem, destino, auxiliar);
+    
+        printf("Mover disco %d de %c para %c\n", n, origem, destino);
+            
+        torreDeHanoi(n - 1, auxiliar, origem, destino);
+        }
+
+
+//exercicio 20 
+void gerarPermutacoes(char str[], int inicio, int fim) {
+    if (inicio == fim) {
+        printf("%s\n", str);
+        return;
+    }
+    
+    for (int i = inicio; i <= fim; i++) {
+        trocarCaracteres(&str[inicio], &str[i]);
+        gerarPermutacoes(str, inicio + 1, fim);
+        trocarCaracteres(&str[inicio], &str[i]);
+    }
+}
+
+void trocarCaracteres(char *a, char *b) {
+    if (a != b) {
+        char temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+}        
+
+        //exercicio 21
+        void gerarCombinacoes(int arr[], int n, int k, int index, int data[], int i) {
+            if (index == k) {
+                printf("{ ");
+                for (int j = 0; j < k; j++) {
+                    printf("%d ", data[j]);
+                }
+                printf("}\n");
+                return;
+            }
+        
+            if (i >= n)
+                return;
+        
+            data[index] = arr[i];
+            gerarCombinacoes(arr, n, k, index + 1, data, i + 1);
+        
+            gerarCombinacoes(arr, n, k, index, data, i + 1);
+        }
+
+        //exercicio 22
+        void gerarSubconjuntos(int arr[], int n, int index, int subconjunto[], int tamanhoAtual) {
+            if (index == n) {
+                // Imprime o subconjunto atual
+                printf("{");
+                for (int i = 0; i < tamanhoAtual; i++) {
+                    printf("%d", subconjunto[i]);
+                    if (i < tamanhoAtual - 1)
+                        printf(", ");
+                }
+                printf("}\n");
+                return;
+            }
+        
+            subconjunto[tamanhoAtual] = arr[index];
+            gerarSubconjuntos(arr, n, index + 1, subconjunto, tamanhoAtual + 1);
+
+            gerarSubconjuntos(arr, n, index + 1, subconjunto, tamanhoAtual);
+        }
+
+
+        //exercicio 23
+        void mergeSort(int arr[], int inicio, int fim) {
+            if (inicio < fim) {
+                int meio = inicio + (fim - inicio) / 2;
+        
+                mergeSort(arr, inicio, meio);
+                mergeSort(arr, meio + 1, fim);
+                merge(arr, inicio, meio, fim);
+            }
+        }
+        
+        void merge(int arr[], int inicio, int meio, int fim) {
+            int n1 = meio - inicio + 1;
+            int n2 = fim - meio;
+        
+            int *esquerda = (int *)malloc(n1 * sizeof(int));
+            int *direita = (int *)malloc(n2 * sizeof(int));
+        
+            for (int i = 0; i < n1; i++)
+                esquerda[i] = arr[inicio + i];
+            for (int j = 0; j < n2; j++)
+                direita[j] = arr[meio + 1 + j];
+        
+            int i = 0, j = 0, k = inicio;
+        
+            while (i < n1 && j < n2) {
+                if (esquerda[i] <= direita[j]) {
+                    arr[k++] = esquerda[i++];
+                } else {
+                    arr[k++] = direita[j++];
+                }
+            }
+            while (i < n1) {
+                arr[k++] = esquerda[i++];
+            }
+            while (j < n2) {
+                arr[k++] = direita[j++];
+            }
+
+            free(esquerda);
+            free(direita);
+        }
+
+
+        //exercicio 24
+        void quickSort(int arr[], int inicio, int fim) {
+            if (inicio < fim) {
+                int pivoIndex = particionar(arr, inicio, fim);
+        
+                quickSort(arr, inicio, pivoIndex - 1);
+                quickSort(arr, pivoIndex + 1, fim);
+            }
+        }
+
+        int particionar(int arr[], int inicio, int fim) {
+            int pivo = arr[fim];
+            int i = inicio - 1;
+        
+            for (int j = inicio; j < fim; j++) {
+                if (arr[j] <= pivo) {
+                    i++;
+                    
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+            
+            int temp = arr[i + 1];
+            arr[i + 1] = arr[fim];
+            arr[fim] = temp;
+        
+            return i + 1; 
         }
 
         //exercicio 26
